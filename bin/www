@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+const server = require('../src/server');
+
+/* Initiate Server */
+server.listen(server.get('port'), server.get('host'), function () {
+  console.log('Listening on %s:%d', server.get('host'), server.get('port'));
+});

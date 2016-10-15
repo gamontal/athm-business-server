@@ -1,0 +1,10 @@
+{
+  "not_found": {
+    "code": "NOT_FOUND",
+    "desc": "The specified endpoint does not exist"
+  },
+  "bad_request": {
+    "code": "BAD_REQUEST",
+    "desc": "The request was invalid or cannot be otherwise served"
+  }
+}
