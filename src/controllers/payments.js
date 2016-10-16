@@ -35,7 +35,8 @@ exports.request = function (req, res, next) {
     };
 
     const client = {
-      phone: phone
+      phone: phone,
+      avatar: 'http://res.cloudinary.com/dvicgeltx/image/upload/v1457705095/img4_pnpgsg.jpg' // for tests
     };
 
     Business.findOne({ _id: businessId }, function (err, business) {

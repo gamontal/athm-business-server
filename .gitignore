@@ -80,6 +80,5 @@ $RECYCLE.BIN/
 .openshift
 
 # Other
-.env
 .vscode
 /data
