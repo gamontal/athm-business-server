@@ -18,5 +18,17 @@
   "payment_not_verified": {
     "code": "PAYMENT_NOT_VERIFIED",
     "desc": "Unable to verify payment status"
+  },
+  "business_profile_not_created": {
+    "code": "PROFILE_NOT_CREATED",
+    "desc": "Unable to create business profile"
+  },
+  "payment_not_registered": {
+    "code": "PAYMENT_NOT_REGISTERED",
+    "desc": "Internal server error. Payment was not registered."
+  },
+  "business_not_found": {
+    "code": "BUSINESS_NOT_FOUND",
+    "desc": "Business not found"
   }
 }

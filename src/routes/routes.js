@@ -11,8 +11,7 @@ module.exports = function (server) {
   const indexController = require('../controllers/index');
   const authController = require('../controllers/auth');
   const paymentsController = require('../controllers/payments');
-  //todo const clientsController = require('../controllers/clients');
-  //todo const transactionsController = require('../controllers/transactions');
+  const clientsController = require('../controllers/clients');
 
   /* Middleware */
   const sanitizer = require('../middleware/sanitizer');
@@ -23,13 +22,19 @@ module.exports = function (server) {
 
   router.route('/')
     .get(indexController);
+
+  router.use(sanitizer);
+
   router.route('/auth')
     .post(authController.authenticate);
   router.route('/payments/request')
     .post(paymentsController.request);
   router.route('/payments/status')
     .post(paymentsController.status);
-  router.use(sanitizer);
+  router.route('/payments')
+    .get(paymentsController.getPayments);
+  router.route('/clients')
+    .get(clientsController.getClients);
 
   server.use('/api', router);
   server.use('*', notFound); // catch 404 status codes

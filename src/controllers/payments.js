@@ -2,13 +2,15 @@
 
 const athMovilApi = require('../../lib/ath-movil-api');
 const httpErrorResponses = require('../../lib/http/error-responses.json');
+const Business = require('../db/models/business');
 
-exports.request = function (req, res) {
+exports.request = function (req, res, next) {
   const token = req.body.token;
+  const businessId = req.body.business_id;
   const phone = req.body.phone;
   const amount = req.body.amount;
 
-  if (!token || !phone || !amount) {
+  if (!token || !businessId || !phone || !amount) {
     return res.status(403).json({
       error: httpErrorResponses.bad_request
     });
@@ -21,11 +23,43 @@ exports.request = function (req, res) {
       });
     }
 
-    return res.status(200).json({
+    const payment = {
       reference_number: apiResponse.referenceNumber,
       phone: apiResponse.phone,
-      amount: apiResponse.amount,
-      status: apiResponse.status
+      amount: apiResponse.amount
+    };
+
+    const client = {
+      phone: phone
+    };
+
+    Business.findOne({ _id: businessId }, function (err, business) {
+      if (err) {
+        return next(err);
+      }
+
+      if (!business) {
+        return res.status(404).json({
+          error: httpErrorResponses.business_not_found
+        });
+      }
+
+      business.payments.push(payment);
+      business.clients.push(client);
+      business.save(function (err) {
+        if (err) {
+          res.status(500).json({
+            error: httpErrorResponses.payment_not_registered
+          });
+        }
+
+        return res.status(200).json({
+          reference_number: apiResponse.referenceNumber,
+          phone: apiResponse.phone,
+          amount: apiResponse.amount,
+          status: apiResponse.status
+        });
+      });
     });
   });
 };
@@ -52,6 +86,34 @@ exports.status = function (req, res) {
       phone: apiResponse.phone,
       amount: apiResponse.amount,
       status: apiResponse.status
+    });
+  });
+};
+
+exports.getPayments = function (req, res, next) {
+  const businessId = req.body.business_id;
+
+  if (!businessId) {
+    return res.status(403).json({
+      error: httpErrorResponses.bad_request
+    });
+  }
+
+  Business.findOne({ _id: businessId }, function (err, business) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!business) {
+      return res.status(404).json({
+        error: httpErrorResponses.business_not_found
+      });
+    }
+
+    const payments = business.payments;
+
+    return res.status(200).json({
+      payments: payments
     });
   });
 };
