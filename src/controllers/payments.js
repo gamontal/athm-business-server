@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 const athMovilApi = require('../../lib/ath-movil-api');
 const httpErrorResponses = require('../../lib/http/error-responses.json');
 const Business = require('../db/models/business');
@@ -24,6 +25,7 @@ exports.request = function (req, res, next) {
     }
 
     const payment = {
+      create_time: moment().format('MMM Do YY'),
       reference_number: apiResponse.referenceNumber,
       phone: apiResponse.phone,
       amount: apiResponse.amount
@@ -54,6 +56,7 @@ exports.request = function (req, res, next) {
         }
 
         return res.status(200).json({
+          create_time: payment.create_time,
           reference_number: apiResponse.referenceNumber,
           phone: apiResponse.phone,
           amount: apiResponse.amount,
