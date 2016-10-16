@@ -6,5 +6,17 @@
   "bad_request": {
     "code": "BAD_REQUEST",
     "desc": "The request was invalid or cannot be otherwise served"
+  },
+  "authentication_failed": {
+    "code": "AUTHENTICATION_FAILED",
+    "desc": "Unable to authenticate commerce"
+  },
+  "payment_not_sent": {
+    "code": "PAYMENT_NOT_SENT",
+    "desc": "Unable to send payment"
+  },
+  "payment_not_verified": {
+    "code": "PAYMENT_NOT_VERIFIED",
+    "desc": "Unable to verify payment status"
   }
 }

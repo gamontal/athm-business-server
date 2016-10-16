@@ -14,7 +14,13 @@ exports.request = function (req, res) {
     });
   }
 
-  athMovilApi.requestPayment(token, phone, amount, function (apiResponse) {
+  athMovilApi.requestPayment(token, phone, amount, function (err, apiResponse) {
+    if (err) {
+      return res.status(403).json({
+        error: httpErrorResponses.payment_not_sent
+      });
+    }
+
     return res.status(200).json({
       reference_number: apiResponse.referenceNumber,
       phone: apiResponse.phone,
@@ -34,7 +40,13 @@ exports.status = function (req, res) {
     });
   }
 
-  athMovilApi.verifyService(token, referenceNumber, function (apiResponse) {
+  athMovilApi.verifyService(token, referenceNumber, function (err, apiResponse) {
+    if (err) {
+      return res.status(403).json({
+        error: httpErrorResponses.payment_not_verified
+      });
+    }
+
     return res.status(200).json({
       reference_number: apiResponse.referenceNumber,
       phone: apiResponse.phone,

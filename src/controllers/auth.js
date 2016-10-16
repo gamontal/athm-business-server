@@ -13,7 +13,13 @@ exports.authenticate = function (req, res) {
     });
   }
 
-  athMovilApi.requestSession(commUsername, commPassword, function (apiResponse) {
+  athMovilApi.requestSession(commUsername, commPassword, function (err, apiResponse) {
+    if (err) {
+      return res.status(403).json({
+        error: httpErrorResponses.authentication_failed
+      });
+    }
+
     return res.status(200).json({
       token: apiResponse.token,
       exp_date: apiResponse.expDate
