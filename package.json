@@ -14,6 +14,7 @@
     "express": "^4.0.0",
     "helmet": "^2.3.0",
     "mongoose": "^4.5.1",
+    "request": "^2.75.0",
     "validator": "^5.2.0"
   },
   "devDependencies": {

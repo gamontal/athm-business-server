@@ -9,6 +9,10 @@ module.exports = function (server) {
 
   /* Controllers */
   const indexController = require('../controllers/index');
+  const authController = require('../controllers/auth');
+  const paymentsController = require('../controllers/payments');
+  //todo const clientsController = require('../controllers/clients');
+  //todo const transactionsController = require('../controllers/transactions');
 
   /* Middleware */
   const sanitizer = require('../middleware/sanitizer');
@@ -19,7 +23,12 @@ module.exports = function (server) {
 
   router.route('/')
     .get(indexController);
-
+  router.route('/auth')
+    .post(authController.authenticate);
+  router.route('/payments/request')
+    .post(paymentsController.request);
+  router.route('/payments/status')
+    .post(paymentsController.status);
   router.use(sanitizer);
 
   server.use('/api', router);
