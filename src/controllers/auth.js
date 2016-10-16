@@ -30,6 +30,7 @@ exports.authenticate = function (req, res) {
     });
 
     business.save(function (err) {
+      console.log(err);
       if (err) {
         return res.status(500).json({
           error: httpErrorResponses.business_profile_not_created
