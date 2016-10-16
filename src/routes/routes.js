@@ -11,6 +11,7 @@ module.exports = function (server) {
   const indexController = require('../controllers/index');
   const authController = require('../controllers/auth');
   const paymentsController = require('../controllers/payments');
+  const transactionsController = require('../controllers/transactions');
   const clientsController = require('../controllers/clients');
 
   /* Middleware */
@@ -31,8 +32,8 @@ module.exports = function (server) {
     .post(paymentsController.request);
   router.route('/payments/status')
     .post(paymentsController.status);
-  router.route('/payments')
-    .get(paymentsController.getPayments);
+  router.route('/transactions')
+    .get(transactionsController.getTransactions);
   router.route('/clients')
     .get(clientsController.getClients);
 

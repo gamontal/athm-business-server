@@ -46,7 +46,7 @@ exports.request = function (req, res, next) {
         });
       }
 
-      business.payments.push(payment);
+      business.transactions.push(payment);
       business.clients.push(client);
       business.save(function (err) {
         if (err) {
@@ -89,34 +89,6 @@ exports.status = function (req, res) {
       phone: apiResponse.phone,
       amount: apiResponse.amount,
       status: apiResponse.status
-    });
-  });
-};
-
-exports.getPayments = function (req, res, next) {
-  const businessId = req.body.business_id;
-
-  if (!businessId) {
-    return res.status(403).json({
-      error: httpErrorResponses.bad_request
-    });
-  }
-
-  Business.findOne({ _id: businessId }, function (err, business) {
-    if (err) {
-      return next(err);
-    }
-
-    if (!business) {
-      return res.status(404).json({
-        error: httpErrorResponses.business_not_found
-      });
-    }
-
-    const payments = business.payments;
-
-    return res.status(200).json({
-      payments: payments
     });
   });
 };

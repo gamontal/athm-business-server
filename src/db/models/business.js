@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const BusinessSchema = new Schema({
   _id: { type: String },
-  payments: { type: Array },
+  transactions: { type: Array },
   clients: { type: Array }
 });
 
