@@ -27,7 +27,10 @@ exports.request = function (req, res, next) {
     const payment = {
       create_time: moment().format('MMM Do YY'),
       reference_number: apiResponse.referenceNumber,
-      phone: apiResponse.phone,
+      client: {
+        phone: apiResponse.phone,
+        avatar: 'http://res.cloudinary.com/dvicgeltx/image/upload/v1457705095/img4_pnpgsg.jpg' // for tests
+      },
       amount: apiResponse.amount
     };
 
